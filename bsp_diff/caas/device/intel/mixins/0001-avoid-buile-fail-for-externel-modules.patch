@@ -1,0 +1,27 @@
+From b093099ce5f42994e6620ea977a33a72728c76ca Mon Sep 17 00:00:00 2001
+From: KunYi Chen <kunyi.chen@gmail.com>
+Date: Sun, 18 Dec 2022 21:03:54 +0800
+Subject: [PATCH] avoid buile fail for externel modules
+
+---
+ groups/kernel/AndroidBoard.mk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/groups/kernel/AndroidBoard.mk b/groups/kernel/AndroidBoard.mk
+index 558bbc6..1cd9cde 100644
+--- a/groups/kernel/AndroidBoard.mk
++++ b/groups/kernel/AndroidBoard.mk
+@@ -131,8 +131,8 @@ CHECK_CONFIG_LOG :=  $(LOCAL_KERNEL_PATH)/.config.check
+ 
+ KERNEL_DEPS := $(shell find $(LOCAL_KERNEL_SRC) \( -name *.git -prune \) -o -print )
+ 
+-KERNEL_MAKE_CMD:= \
+-      PATH="$(PWD)/prebuilts/build-tools/linux-x86/bin:$(TARGET_KERNEL_CLANG_PATH):$(PWD)/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8/x86_64-linux/bin:$$PATH" \
++KERNEL_MAKE_CMD := \
++      PATH=$(PWD)/prebuilts/build-tools/linux-x86/bin:$(TARGET_KERNEL_CLANG_PATH):$(PWD)/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8/x86_64-linux/bin:/bin:/usr/bin:/sbin:/usr/sbin:$$PATH \
+       make -j24
+ 
+ # Before building final defconfig with debug diffconfigs
+-- 
+2.39.0
+
